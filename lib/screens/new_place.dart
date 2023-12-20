@@ -1,14 +1,25 @@
+import 'package:favoriteplace/providers/user_places.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class NewPlace extends StatefulWidget {
+class NewPlace extends ConsumerStatefulWidget {
   const NewPlace({super.key});
 
   @override
-  State<NewPlace> createState() => _NewPlaceState();
+  ConsumerState<NewPlace> createState() => _NewPlaceState();
 }
 
-class _NewPlaceState extends State<NewPlace> {
+class _NewPlaceState extends ConsumerState<NewPlace> {
   final _placeName = TextEditingController();
+  void _savePlace() {
+    final enteredText = _placeName.text;
+    if (enteredText.isEmpty) {
+      return;
+    }
+    ref.read(userplacesProvider.notifier).addPlace(enteredText);
+    Navigator.of(context).pop();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -103,7 +114,7 @@ class _NewPlaceState extends State<NewPlace> {
           ),
           Center(
             child: TextButton(
-                onPressed: () {},
+                onPressed: _savePlace,
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(
                   const Color.fromARGB(255, 103, 3, 235),

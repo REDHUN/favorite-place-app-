@@ -1,13 +1,14 @@
 import 'package:favoriteplace/screens/places_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 
 final colorScheme = ColorScheme.fromSeed(
   brightness: Brightness.light,
   seedColor: const Color.fromARGB(255, 102, 6, 247),
-  background: Color.fromRGBO(248, 248, 248, 0.986),
+  background: const Color.fromRGBO(248, 248, 248, 0.986),
 );
 
 final theme = ThemeData().copyWith(
@@ -29,7 +30,7 @@ final theme = ThemeData().copyWith(
 
 void main() {
   runApp(
-    const MyApp(),
+    const ProviderScope(child: MyApp()),
   );
 }
 

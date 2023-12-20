@@ -1,23 +1,16 @@
-import 'package:favoriteplace/data/dummy_place.dart';
+import 'package:favoriteplace/providers/user_places.dart';
+import 'package:favoriteplace/widgets/places_list.dart';
 import 'package:favoriteplace/screens/new_place.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class PlacesScreen extends StatefulWidget {
+class PlacesScreen extends ConsumerWidget {
   const PlacesScreen({super.key});
 
   @override
-  State<PlacesScreen> createState() => _PlacesScreenState();
-}
-
-class _PlacesScreenState extends State<PlacesScreen> {
-  void _addPlace() {
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (ctx) => const NewPlace()));
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final userPlaces = ref.watch(userplacesProvider);
     return Scaffold(
       body: Column(
         children: [
@@ -45,7 +38,10 @@ class _PlacesScreenState extends State<PlacesScreen> {
                       color: Colors.black.withOpacity(.1),
                       borderRadius: BorderRadius.circular(12)),
                   child: IconButton(
-                      onPressed: _addPlace,
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (ctx) => const NewPlace()));
+                      },
                       icon: const Icon(
                         Icons.add,
                         color: Colors.white,
@@ -55,36 +51,7 @@ class _PlacesScreenState extends State<PlacesScreen> {
               ],
             ),
           ),
-          Expanded(
-            child: ListView.builder(
-                itemCount: placeList.length,
-                itemBuilder: (ctx, index) => InkWell(
-                      onTap: () {},
-                      child: Container(
-                        width: double.infinity,
-                        decoration: const BoxDecoration(),
-                        child: Row(
-                          children: [
-                            Container(
-                                margin: const EdgeInsets.symmetric(
-                                    horizontal: 20, vertical: 10),
-                                padding: const EdgeInsets.all(15),
-                                height: 60,
-                                width: MediaQuery.of(context).size.width - 40,
-                                decoration: BoxDecoration(
-                                    color: Colors.grey.shade200,
-                                    borderRadius: BorderRadius.circular(16)),
-                                child: Text(
-                                  placeList[index].name.toString(),
-                                  style: const TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
-                                ))
-                          ],
-                        ),
-                      ),
-                    )),
-          )
+          PlacesList(places: userPlaces),
         ],
       ),
       backgroundColor: Colors.grey[100],
