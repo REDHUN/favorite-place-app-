@@ -1,4 +1,3 @@
-import 'package:favoriteplace/data/dummy_place.dart';
 import 'package:favoriteplace/models/place.dart';
 import 'package:favoriteplace/screens/place_details.dart';
 import 'package:flutter/material.dart';
@@ -26,20 +25,22 @@ class PlacesList extends StatelessWidget {
           itemBuilder: (ctx, index) => InkWell(
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (ctx) =>
-                          PlaceDetailScreen(placeTilte: places[index].name)));
+                      builder: (ctx) => PlaceDetailScreen(
+                            place: places[index],
+                          )));
                 },
                 child: Container(
                   width: double.infinity,
                   decoration: const BoxDecoration(),
                   child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
                           margin: const EdgeInsets.symmetric(
                               horizontal: 20, vertical: 10),
                           padding: const EdgeInsets.all(15),
                           height: 60,
-                          width: MediaQuery.of(context).size.width - 40,
+                          width: MediaQuery.of(context).size.width / 2,
                           decoration: BoxDecoration(
                               color: Colors.grey.shade200,
                               borderRadius: BorderRadius.circular(16)),
@@ -47,7 +48,11 @@ class PlacesList extends StatelessWidget {
                             places[index].name.toString(),
                             style: const TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold),
-                          ))
+                          )),
+                      CircleAvatar(
+                        radius: 26,
+                        backgroundImage: FileImage(places[index].image),
+                      )
                     ],
                   ),
                 ),

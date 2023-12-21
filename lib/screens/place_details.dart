@@ -1,8 +1,9 @@
+import 'package:favoriteplace/models/place.dart';
 import 'package:flutter/material.dart';
 
 class PlaceDetailScreen extends StatelessWidget {
-  const PlaceDetailScreen({super.key, required this.placeTilte});
-  final placeTilte;
+  const PlaceDetailScreen({super.key, required this.place});
+  final Places place;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +40,7 @@ class PlaceDetailScreen extends StatelessWidget {
                   width: 30,
                 ),
                 Text(
-                  placeTilte,
+                  place.name,
                   style: const TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
@@ -48,7 +49,18 @@ class PlaceDetailScreen extends StatelessWidget {
               ],
             ),
           ),
-          Text(placeTilte),
+          Container(
+            child: Stack(
+              children: [
+                Image.file(
+                  place.image,
+                  fit: BoxFit.cover,
+                  width: 300,
+                  height: 300,
+                )
+              ],
+            ),
+          )
         ],
       ),
     );
