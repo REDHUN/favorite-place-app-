@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:favoriteplace/providers/user_places.dart';
 import 'package:favoriteplace/widgets/image_input.dart';
+import 'package:favoriteplace/widgets/location_input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -125,6 +126,10 @@ class _NewPlaceState extends ConsumerState<NewPlace> {
             const SizedBox(
               height: 30,
             ),
+            const SizedBox(
+              height: 20,
+            ),
+            const LocationInput(),
             Center(
               child: TextButton(
                   onPressed: _savePlace,
